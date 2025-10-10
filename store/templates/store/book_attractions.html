@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+{% block title %}Book {{ attraction.name }}{% endblock %}
+{% block content %}
+<div class="card shadow-sm p-4">
+  <h3>Book: {{ attraction.name }}</h3>
+  <img src="{{ attraction.image_url }}" alt="{{ attraction.name }}" class="img-fluid rounded mb-3" style="height:300px;object-fit:cover;">
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="visit_date" class="form-label">Visit Date</label>
+      <input type="date" name="visit_date" id="visit_date" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="tickets" class="form-label">Number of Tickets</label>
+      <input type="number" name="tickets" id="tickets" class="form-control" value="1" min="1">
+    </div>
+    <p>🎟️ Price per ticket: ₹{{ attraction.ticket_price }}</p>
+    <button type="submit" class="btn btn-success">Confirm Booking</button>
+    <a href="{% url 'attraction_detail' attraction.slug %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'store/base.html' %}
+{% block title %}Home | TouristEcomm{% endblock %}
+{% block content %}
+
+<!-- ====== Carousel Section ====== -->
+<div id="featuredCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for item in featured %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <img src="{{ item.image_url }}" class="d-block w-100 rounded" style="height: 450px; object-fit: cover;" alt="{{ item.name }}">
+      <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+        <h5>{{ item.name }}</h5>
+        <p>{{ item.region.name }} — ₹{{ item.ticket_price }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- ====== Regions Section ====== -->
+<h2 class="text-center mb-4">🌍 Explore by Region</h2>
+<div class="row g-4">
+  {% for region, attractions in region_attractions %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="d-flex align-items-center p-3">
+        {% if region.flag_url %}
+        <img src="{{ region.flag_url }}" alt="{{ region.name }} Flag" class="me-2" style="width: 40px; height: 25px; object-fit: cover; border-radius: 3px;">
+        {% endif %}
+        <h5 class="m-0">{{ region.name }}</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-2">
+          {% for a in attractions %}
+          <div class="col-6">
+            <a href="{% url 'attraction_detail' a.slug %}" class="text-decoration-none">
+              <img src="{{ a.image_url }}" alt="{{ a.name }}" class="img-fluid rounded mb-1" style="height: 100px; width: 100%; object-fit: cover;">
+              <p class="small text-muted text-center">{{ a.name|truncatechars:25 }}</p>
+            </a>
+          </div>
+          {% empty %}
+          <p class="text-muted">No attractions yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

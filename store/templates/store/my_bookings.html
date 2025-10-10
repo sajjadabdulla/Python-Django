@@ -1,0 +1,53 @@
+{% extends 'store/base.html' %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<h2 class="mb-4">My Bookings</h2>
+
+<h4>✅ Confirmed</h4>
+{% if confirmed %}
+<div class="row">
+  {% for booking in confirmed %}
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm p-3">
+      <div class="d-flex">
+        <img src="{{ booking.attraction.image_url }}" class="rounded me-3" style="width:100px;height:80px;object-fit:cover;">
+        <div>
+          <h5>{{ booking.attraction.name }}</h5>
+          <p class="mb-0">Visit: {{ booking.visit_date }}</p>
+          <p class="mb-0">Tickets: {{ booking.number_of_tickets }}</p>
+          <p class="mb-0">Total: ₹{{ booking.total_price }}</p>
+          <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-sm btn-danger mt-2">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No confirmed bookings.</p>
+{% endif %}
+
+<hr>
+
+<h4>❌ Canceled</h4>
+{% if cancelled %}
+<div class="row">
+  {% for booking in cancelled %}
+  <div class="col-md-6 mb-3">
+    <div class="card bg-light shadow-sm p-3">
+      <div class="d-flex">
+        <img src="{{ booking.attraction.image_url }}" class="rounded me-3" style="width:100px;height:80px;object-fit:cover;">
+        <div>
+          <h5>{{ booking.attraction.name }}</h5>
+          <p class="mb-0">Visit: {{ booking.visit_date }}</p>
+          <p class="mb-0 text-danger">Status: Cancelled</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No canceled bookings.</p>
+{% endif %}
+{% endblock %}

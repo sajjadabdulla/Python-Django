@@ -1,0 +1,18 @@
+{% extends 'store/base.html' %}
+{% block title %}Sign In{% endblock %}
+{% block content %}
+<h3>Sign In</h3>
+<form method="post" class="p-4 bg-white rounded shadow-sm">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label>Username</label>
+    <input type="text" name="username" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label>Password</label>
+    <input type="password" name="password" class="form-control" required>
+  </div>
+  <button class="btn btn-success w-100">Sign In</button>
+</form>
+<p class="mt-2 text-center">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+{% endblock %}
